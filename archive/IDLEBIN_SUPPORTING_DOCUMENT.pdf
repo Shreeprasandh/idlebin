@@ -1,0 +1,108 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 6857 >>
+stream
+0.980 0.990 1.000 rg 0.0 0.0 595.0 842.0 re f
+0.100 0.600 0.350 rg 0.0 834.0 595.0 8.0 re f
+BT /F2 10 Tf 0.100 0.600 0.350 rg 40.0 795.0 Td (TECHNICAL SPECIFICATION & PROTOTYPE FABRICATION BRIEF) Tj ET
+BT /F2 18 Tf 0.080 0.140 0.240 rg 40.0 770.0 Td (IDLEBIN: Low-Cost Mechanical Compacting Dustbin) Tj ET
+BT /F1 9 Tf 0.350 0.400 0.480 rg 40.0 750.0 Td (Category: Waste Management | Pondicherry University Grand Finale Submission) Tj ET
+0.850 0.880 0.920 rg 40.0 740.0 515.0 1.0 re f
+BT /F2 11 Tf 0.080 0.140 0.240 rg 40.0 720.0 Td (1. SYSTEM OVERVIEW & PROBLEM STATEMENT) Tj ET
+0.8 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 655.0 515.0 55.0 re B
+BT /F1 9 Tf 0.120 0.150 0.180 rg 50.0 692.0 Td (Municipal solid waste in Indian cities and villages is dominated by high-volume, low-density plastic) Tj ET
+BT /F1 9 Tf 0.120 0.150 0.180 rg 50.0 677.0 Td (packaging \(PET bottles, snack sachets\). Uncompressed waste fills bins within hours, causing chronic street) Tj ET
+BT /F1 9 Tf 0.120 0.150 0.180 rg 50.0 662.0 Td (overflow and animal scattering. IdleBin provides a pure mechanical 4x volume reduction at zero electricity.) Tj ET
+BT /F2 11 Tf 0.080 0.140 0.240 rg 40.0 635.0 Td (2. BILL OF MATERIALS \(BOM\) & PROTOTYPE COSTING) Tj ET
+0.080 0.140 0.240 rg 40.0 605.0 515.0 20.0 re f
+BT /F2 8 Tf 1.000 1.000 1.000 rg 50.0 611.0 Td (ITEM / COMPONENT) Tj ET
+BT /F2 8 Tf 1.000 1.000 1.000 rg 180.0 611.0 Td (SPECIFICATION) Tj ET
+BT /F2 8 Tf 1.000 1.000 1.000 rg 340.0 611.0 Td (FUNCTION) Tj ET
+BT /F2 8 Tf 1.000 1.000 1.000 rg 470.0 611.0 Td (COST \(INR\)) Tj ET
+0.5 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 583.0 515.0 20.0 re B
+BT /F2 8 Tf 0.120 0.150 0.180 rg 50.0 588.0 Td (Outer Body Drum) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 180.0 588.0 Td (25L-30L Cylindrical HDPE Bin) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 340.0 588.0 Td (Waste containment housing) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 470.0 588.0 Td (Rs. 250) Tj ET
+0.5 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 563.0 515.0 20.0 re B
+BT /F2 8 Tf 0.120 0.150 0.180 rg 50.0 568.0 Td (Compactor Platen) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 180.0 568.0 Td (8mm Perforated Acrylic / Wood) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 340.0 568.0 Td (Downwards compression plate) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 470.0 568.0 Td (Rs. 100) Tj ET
+0.5 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 543.0 515.0 20.0 re B
+BT /F2 8 Tf 0.120 0.150 0.180 rg 50.0 548.0 Td (Linkage Pushrod) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 180.0 548.0 Td (1/2-inch Mild Steel / PVC Tube) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 340.0 548.0 Td (Force transmission rod) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 470.0 548.0 Td (Rs. 120) Tj ET
+0.5 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 523.0 515.0 20.0 re B
+BT /F2 8 Tf 0.120 0.150 0.180 rg 50.0 528.0 Td (Foot Pedal Lever) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 180.0 528.0 Td (Mild Steel Flat Bar / Re-bar) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 340.0 528.0 Td (Biomechanical input pedal) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 470.0 528.0 Td (Rs. 80) Tj ET
+0.5 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 503.0 515.0 20.0 re B
+BT /F2 8 Tf 0.120 0.150 0.180 rg 50.0 508.0 Td (Return Springs) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 180.0 508.0 Td (Dual Helical Tension Springs) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 340.0 508.0 Td (Automatic plate reset) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 470.0 508.0 Td (Rs. 50) Tj ET
+0.5 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 483.0 515.0 20.0 re B
+BT /F2 8 Tf 0.120 0.150 0.180 rg 50.0 488.0 Td (Pivot Fasteners) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 180.0 488.0 Td (M6 Galvanized Bolts + Hinges) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 340.0 488.0 Td (Joint pivot points) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 470.0 488.0 Td (Rs. 40) Tj ET
+0.5 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 463.0 515.0 20.0 re B
+BT /F2 8 Tf 0.120 0.150 0.180 rg 50.0 468.0 Td (Bio-Filter Tray) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 180.0 468.0 Td (Activated Coconut Charcoal Packet) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 340.0 468.0 Td (Passive odor neutralizer) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 470.0 468.0 Td (Rs. 40) Tj ET
+0.8 w 0.920 0.980 0.940 rg 0.100 0.600 0.350 RG 40.0 443.0 515.0 20.0 re B
+BT /F2 8 Tf 0.100 0.600 0.350 rg 50.0 448.0 Td (TOTAL PROTOTYPE FABRICATION COST) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 470.0 448.0 Td (Rs. 680 \(Under $9 USD\)) Tj ET
+BT /F2 11 Tf 0.080 0.140 0.240 rg 40.0 413.0 Td (3. MECHANICAL ENGINEERING CALCULATIONS) Tj ET
+0.8 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 343.0 515.0 60.0 re B
+BT /F2 8 Tf 0.150 0.450 0.850 rg 50.0 383.0 Td (Mechanical Advantage: MA = Effort Arm \(Le\) / Load Arm \(Ll\) = 27 cm / 15 cm = 1.80) Tj ET
+BT /F1 8 Tf 0.120 0.150 0.180 rg 50.0 368.0 Td (Applied Force: User applies normal foot pressure F_input = ~350 N \(approx 35 kg force equivalent\).) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 50.0 353.0 Td (Crushing Force: F_compaction = F_input * MA = 350 N * 1.80 = 630 N \(Sufficient to crush 3 PET bottles simultaneously\).) Tj ET
+BT /F2 11 Tf 0.080 0.140 0.240 rg 40.0 318.0 Td (4. 48-HOUR RAPID PROTOTYPING PROCEDURE) Tj ET
+0.8 w 1.000 1.000 1.000 rg 0.850 0.880 0.920 RG 40.0 223.0 515.0 85.0 re B
+BT /F1 8 Tf 0.120 0.150 0.180 rg 50.0 290.0 Td (1. Platen Cutting: Cut circular plate 15mm smaller than bin diameter. Drill six 12mm holes for air venting.) Tj ET
+BT /F1 8 Tf 0.120 0.150 0.180 rg 50.0 275.0 Td (2. Fulcrum Mounting: Drill two 8mm pivot holes at bottom base. Mount pedal with M8 bolt and nylon lock-nut.) Tj ET
+BT /F1 8 Tf 0.120 0.150 0.180 rg 50.0 260.0 Td (3. Linkage Assembly: Connect pushrod to pedal arm. Connect upper pushrod end to central platen mounting bracket.) Tj ET
+BT /F1 8 Tf 0.120 0.150 0.180 rg 50.0 245.0 Td (4. Spring Tensioning: Hook dual tension springs between top rim and platen to ensure immediate recoil.) Tj ET
+BT /F1 8 Tf 0.120 0.150 0.180 rg 50.0 230.0 Td (5. Testing & Validation: Conduct 50 continuous test cycles on empty PET bottles and cardboard snack boxes.) Tj ET
+BT /F2 11 Tf 0.080 0.140 0.240 rg 40.0 198.0 Td (5. KEY HIGHLIGHTS FOR COMPETITION JURY) Tj ET
+0.8 w 0.960 0.980 1.000 rg 0.150 0.450 0.850 RG 40.0 138.0 515.0 50.0 re B
+BT /F2 8 Tf 0.080 0.140 0.240 rg 50.0 170.0 Td (Direct SBM-U 2.0 KPI: Directly stops Garbage Vulnerable Points \(GVPs\) and open drain choking.) Tj ET
+BT /F1 8 Tf 0.120 0.150 0.180 rg 50.0 156.0 Td (Zero Electrical Dependency: Never suffers from drained batteries, broken chips, or weather damage.) Tj ET
+BT /F2 8 Tf 0.100 0.600 0.350 rg 50.0 143.0 Td (Universal Adoption: Feasible for any rural Panchayat, municipal street, school, or railway station.) Tj ET
+BT /F1 8 Tf 0.350 0.400 0.480 rg 40.0 25.0 Td (IdleBin Technical Specification  |  Confidential & Proprietary Submission  |  Pondicherry University 2026) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000000260 00000 n 
+0000000396 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+7305
+%%EOF

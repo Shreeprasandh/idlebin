@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build output
+.next/
+out/
+build/
+dist/
+
+# Environment and secrets (Beta Sentinel & Zero Secret Exposure)
+.env
+.env*.local
+.env.mcp
+*.pem
+*.key
+
+# The Dumb Protocol & Research Scrap
+*_MASTER_STUDY_NOTEBOOK.md
+research/
+scratch/
+
+# Logs & Telemetry
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS artifacts
+.DS_Store
+*.pem
+
+# Editor artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python bytecode
+__pycache__/
+*.pyc
