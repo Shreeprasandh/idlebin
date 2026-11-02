@@ -31,6 +31,9 @@ yarn-error.log*
 # OS artifacts
 .DS_Store
 *.pem
+*.zip
+Certificate\ EMERGE/
+Certificate\ EMERGE.zip
 
 # Editor artifacts
 .vscode/
