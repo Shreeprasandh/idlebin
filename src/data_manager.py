@@ -7,6 +7,7 @@ Puducherry Urban Local Body (ULB) Civilian Sector
 import json
 import os
 import random
+import numpy as np
 from datetime import datetime, timedelta
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "bins_state.json")
@@ -81,7 +82,78 @@ INITIAL_CIVILIAN_BINS = [
 ]
 
 
+class AdaptiveUltrasonicFilter:
+    """
+    Adaptive moving-average filter and outlier rejection engine for ultrasonic distance sensors.
+    Mitigates acoustic reflection flutter, multi-path echo bounces off irregular PET geometry,
+    and mechanical vibration transients during foot pedal compaction.
+    """
+
+    def __init__(self, window_size: int = 5, max_deviation_cm: float = 25.0, bin_depth_cm: float = 80.0, sensor_offset_cm: float = 5.0):
+        self.window_size = window_size
+        self.max_deviation_cm = max_deviation_cm
+        self.bin_depth_cm = bin_depth_cm
+        self.sensor_offset_cm = sensor_offset_cm
+        self._history: dict[str, list[float]] = {}
+
+    def filter_reading(self, bin_id: str, raw_distance_cm: float) -> dict:
+        """
+        Applies windowed outlier rejection and weighted moving average to incoming ultrasonic pulses.
+        Returns:
+            dict containing filtered_distance_cm, fill_pct, confidence_score, and is_outlier.
+        """
+        clamped_raw = max(0.0, min(self.bin_depth_cm + 20.0, raw_distance_cm))
+
+        if bin_id not in self._history:
+            self._history[bin_id] = []
+
+        readings = self._history[bin_id]
+        is_outlier = False
+
+        if readings:
+            median_val = float(np.median(readings))
+            if abs(clamped_raw - median_val) > self.max_deviation_cm:
+                is_outlier = True
+                smoothed_reading = (median_val * 0.75) + (clamped_raw * 0.25)
+            else:
+                smoothed_reading = clamped_raw
+        else:
+            smoothed_reading = clamped_raw
+
+        readings.append(smoothed_reading)
+        if len(readings) > self.window_size:
+            readings.pop(0)
+
+        weights = [1.2 ** i for i in range(len(readings))]
+        weight_sum = sum(weights)
+        filtered_distance = sum(r * w for r, w in zip(readings, weights)) / weight_sum
+
+        if len(readings) > 1:
+            variance = float(np.var(readings))
+            confidence = max(0.2, min(1.0, 1.0 - (variance / (self.max_deviation_cm ** 2))))
+        else:
+            confidence = 0.85
+
+        effective_depth = max(1.0, self.bin_depth_cm - self.sensor_offset_cm)
+        empty_gap = max(0.0, min(effective_depth, filtered_distance - self.sensor_offset_cm))
+        fill_pct = max(0.0, min(100.0, ((effective_depth - empty_gap) / effective_depth) * 100.0))
+
+        return {
+            "filtered_distance_cm": round(filtered_distance, 1),
+            "fill_pct": round(fill_pct, 1),
+            "confidence_score": round(confidence, 2),
+            "is_outlier": is_outlier,
+            "sample_count": len(readings)
+        }
+
+    def reset_bin(self, bin_id: str):
+        """Resets filtering history upon confirmed physical emptying."""
+        if bin_id in self._history:
+            self._history[bin_id] = []
+
+
 class DataManager:
+    filter_engine = AdaptiveUltrasonicFilter()
     @classmethod
     def load_bins(cls):
         """Loads bins from JSON file or initializes default values."""
@@ -156,6 +228,64 @@ class DataManager:
                 b["last_updated"] = datetime.now().isoformat()
                 break
         cls.save_bins(bins)
+        cls.filter_engine.reset_bin(bin_id)
+
+    @classmethod
+    def ingest_telemetry_reading(cls, bin_id: str, raw_distance_cm: float, stroke_count: int, battery_mv: int = 4000):
+        """
+        Processes and filters an incoming telemetry packet from an ESP32 edge node.
+        Applies adaptive ultrasonic smoothing, updates bin state, and records telemetry log.
+        """
+        filter_res = cls.filter_engine.filter_reading(bin_id, raw_distance_cm)
+        bins = cls.load_bins()
+        target = None
+        for b in bins:
+            if b["id"] == bin_id:
+                target = b
+                break
+
+        if not target:
+            target = {
+                "id": bin_id,
+                "name": f"Bin {bin_id}",
+                "lat": 13.0310,
+                "lng": 80.1810,
+                "fill_pct": filter_res["fill_pct"],
+                "distance_cm": filter_res["filtered_distance_cm"],
+                "strokes": stroke_count,
+                "battery_mv": battery_mv,
+                "last_updated": datetime.now().isoformat(),
+                "zone": "Civilian Sector",
+                "status": "NORMAL"
+            }
+            bins.append(target)
+        else:
+            target["strokes"] = stroke_count
+            target["distance_cm"] = filter_res["filtered_distance_cm"]
+            target["fill_pct"] = filter_res["fill_pct"]
+            target["battery_mv"] = battery_mv
+            target["last_updated"] = datetime.now().isoformat()
+
+        if target["fill_pct"] >= 85.0:
+            target["status"] = "CRITICAL"
+        elif target["fill_pct"] >= 65.0:
+            target["status"] = "WARNING"
+        else:
+            target["status"] = "NORMAL"
+
+        cls.save_bins(bins)
+        cls.log_telemetry_event({
+            "bin_id": bin_id,
+            "event": "FILTERED_TELEMETRY_INGEST",
+            "stroke_count": stroke_count,
+            "raw_distance_cm": raw_distance_cm,
+            "filtered_distance_cm": filter_res["filtered_distance_cm"],
+            "fill_pct": filter_res["fill_pct"],
+            "confidence_score": filter_res["confidence_score"],
+            "is_outlier": filter_res["is_outlier"],
+            "timestamp": target["last_updated"]
+        })
+        return target
 
     @classmethod
     def log_telemetry_event(cls, event_dict):
