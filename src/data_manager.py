@@ -148,8 +148,7 @@ class AdaptiveUltrasonicFilter:
 
     def reset_bin(self, bin_id: str):
         """Resets filtering history upon confirmed physical emptying."""
-        if bin_id in self._history:
-            self._history[bin_id] = []
+        self._history.pop(bin_id, None)
 
 
 class DataManager:
