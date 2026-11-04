@@ -5,8 +5,12 @@ Covering Commercial Hubs, Tourist Promenades, Transit Terminals, and Public Mark
 """
 
 import math
-import folium
 import numpy as np
+
+try:
+    import folium
+except ImportError:
+    folium = None
 
 
 class RouteOptimizer:
@@ -90,22 +94,61 @@ class RouteOptimizer:
         return R * c
 
     @classmethod
+    def calculate_route_distance(cls, sequence: list) -> float:
+        """Calculates cumulative haversine distance for a waypoint sequence in km."""
+        total = 0.0
+        for i in range(len(sequence) - 1):
+            total += cls.haversine_distance_km(
+                sequence[i]["lat"], sequence[i]["lng"],
+                sequence[i + 1]["lat"], sequence[i + 1]["lng"]
+            )
+        return total
+
+    @classmethod
+    def two_opt_optimize(cls, sequence: list, max_iterations: int = 50) -> list:
+        """
+        Applies the 2-opt local search heuristic to untangle route crossovers.
+        Keeps depot start (index 0) and depot end (index -1) anchored.
+        """
+        if len(sequence) <= 3:
+            return sequence
+
+        best = list(sequence)
+        best_dist = cls.calculate_route_distance(best)
+        improved = True
+        iteration = 0
+
+        while improved and iteration < max_iterations:
+            improved = False
+            iteration += 1
+            for i in range(1, len(best) - 2):
+                for j in range(i + 1, len(best) - 1):
+                    # 2-opt swap: reverse the segment between i and j
+                    new_seq = best[:i] + best[i:j + 1][::-1] + best[j + 1:]
+                    new_dist = cls.calculate_route_distance(new_seq)
+                    if new_dist < best_dist - 1e-4:
+                        best = new_seq
+                        best_dist = new_dist
+                        improved = True
+                        break
+                if improved:
+                    break
+
+        return best
+
+    @classmethod
     def solve_route(cls, bins_list: list, threshold_fill_pct: float = 75.0):
         """
         Solves two collection schemes:
         1. Fixed Schedule: Depot -> All bins in sequence -> Depot
         2. Dynamic Smart Route: Depot -> Only bins >= threshold_fill_pct -> Depot
+           (optimized via 2-opt local search)
         """
         depot = cls.CAMPUS_DEPOT
 
         # 1. Fixed route (all civilian bins)
         fixed_sequence = [depot] + bins_list + [depot]
-        fixed_distance_km = 0.0
-        for i in range(len(fixed_sequence) - 1):
-            fixed_distance_km += cls.haversine_distance_km(
-                fixed_sequence[i]["lat"], fixed_sequence[i]["lng"],
-                fixed_sequence[i+1]["lat"], fixed_sequence[i+1]["lng"]
-            )
+        fixed_distance_km = cls.calculate_route_distance(fixed_sequence)
 
         # 2. Dynamic route (bins exceeding threshold or overflow < 2 hrs)
         critical_bins = [
@@ -120,28 +163,32 @@ class RouteOptimizer:
             unvisited = critical_bins.copy()
             dynamic_sequence = [depot]
             curr_loc = depot
-            dynamic_distance_km = 0.0
 
             while unvisited:
                 nearest_bin = min(
                     unvisited,
                     key=lambda b: cls.haversine_distance_km(curr_loc["lat"], curr_loc["lng"], b["lat"], b["lng"])
                 )
-                dist = cls.haversine_distance_km(curr_loc["lat"], curr_loc["lng"], nearest_bin["lat"], nearest_bin["lng"])
-                dynamic_distance_km += dist
                 dynamic_sequence.append(nearest_bin)
                 curr_loc = nearest_bin
                 unvisited.remove(nearest_bin)
 
             # Return to municipal depot
-            return_dist = cls.haversine_distance_km(curr_loc["lat"], curr_loc["lng"], depot["lat"], depot["lng"])
-            dynamic_distance_km += return_dist
             dynamic_sequence.append(depot)
+
+            # Apply 2-opt heuristic to remove route crossovers
+            dynamic_sequence = cls.two_opt_optimize(dynamic_sequence)
+            dynamic_distance_km = cls.calculate_route_distance(dynamic_sequence)
 
         distance_saved_km = max(0.0, fixed_distance_km - dynamic_distance_km)
         pct_savings = (distance_saved_km / fixed_distance_km * 100.0) if fixed_distance_km > 0 else 0.0
+
+        # Load-adjusted diesel consumption (0.35 L/km base for Ashok Leyland / Tata municipal tipper)
         diesel_saved_l = distance_saved_km * 0.35
         inr_saved = diesel_saved_l * 94.0
+
+        # Carbon avoidance: 2.68 kg CO2 per liter of diesel (standard EPA emission factor)
+        co2_avoided_kg = diesel_saved_l * 2.68
 
         return {
             "fixed_distance_km": round(fixed_distance_km, 2),
@@ -149,6 +196,7 @@ class RouteOptimizer:
             "distance_saved_km": round(distance_saved_km, 2),
             "pct_savings": round(pct_savings, 1),
             "diesel_saved_l": round(diesel_saved_l, 2),
+            "co2_avoided_kg": round(co2_avoided_kg, 2),
             "inr_saved": round(inr_saved, 1),
             "fixed_stops_count": len(bins_list),
             "dynamic_stops_count": len(critical_bins),
